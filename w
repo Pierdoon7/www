@@ -182,8 +182,6 @@
             font-size: 14px;
             color: #666;
             margin-bottom: 15px;
-            height: 40px;
-            overflow: hidden;
         }
 
         .product-specs {
@@ -303,6 +301,10 @@
             font-weight: bold;
         }
 
+        .hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 32px;
@@ -328,7 +330,7 @@
                     <a href="#about">О нас</a>
                     <a href="#contacts">Контакты</a>
                 </nav>
-                <div class="cart-icon" onclick="showCart()">
+                <div class="cart-icon" onclick="alert('В корзине ' + document.getElementById('cart-count').textContent + ' товаров')">
                     🛒
                     <span class="cart-count" id="cart-count">0</span>
                 </div>
@@ -386,9 +388,7 @@
                 <button class="filter-btn" onclick="filterProducts('ceramic')">По керамике</button>
             </div>
 
-            <div class="products-grid" id="products-grid">
-                <!-- Продукты загружаются сюда -->
-            </div>
+            <div class="products-grid" id="products-grid"></div>
         </div>
     </section>
 
@@ -430,46 +430,20 @@
     </footer>
 
     <script>
-        // Пример данных продуктов — замените на свои!
         const products = [
-            {
-                id: 1,
-                name: "Универсальный клей ПВА",
-                category: "universal",
-                price: "150",
-                image: "путь/к/вашему/изображению1.jpg",
-                description: "Экологичный клей на основе ПВА",
-                specs: "Объем: 500 мл\nВремя высыхания: 24 ч"
-            },
-            {
-                id: 2,
-                name: "Монтажный клей для дерева",
-                category: "wood",
-                price: "280",
-                image: "путь/к/вашему/изображению2.jpg",
-                description: "Профессиональный клей для деревянных конструкций",
-                specs: "Объем: 750 мл\nВремя высыхания: 12 ч"
-            },
-            {
-                id: 3,
-                name: "Эпоксидный клей",
-                category: "metal",
-                price: "420",
-                image: "путь/к/вашему/изображению3.jpg",
-                description: "Двухкомпонентный эпоксидный клей",
-                specs: "Объем: 250 мл\nВремя высыхания: 6 ч"
-            },
-            {
-                id: 4,
-                name: "Клей для керамики и плитки",
-                category: "ceramic",
-                price: "350",
-                image: "путь/к/вашему/изображению4.jpg",
-                description: "Специализированный клей для облицовки",
-                specs: "Объем: 1 л\nВремя высыхания: 48 ч"
-            },
-            {
-                id: 5,
-                name: "Силиконовый герметик",
-                category: "universal",
-                
+            { id: 1, name: "Универсальный клей ПВА", category: "universal", price: "150", image: "https://via.placeholder.com/300x250?text=PVA", description: "Экологичный клей", specs: "500 мл, 24 ч" },
+            { id: 2, name: "Монтажный клей для дерева", category: "wood", price: "280", image: "https://via.placeholder.com/300x250?text=Wood", description: "Для деревянных конструкций", specs: "750 мл, 12 ч" },
+            { id: 3, name: "Эпоксидный клей", category: "metal", price: "420", image: "https://via.placeholder.com/300x250?text=Epoxy", description: "Двухкомпонентный", specs: "250 мл, 6 ч" },
+            { id: 4, name: "Клей для керамики", category: "ceramic", price: "350", image: "https://via.placeholder.com/300x250?text=Ceramic", description: "Для облицовки", specs: "1 л, 48 ч" },
+            { id: 5, name: "Силиконовый герметик", category: "universal", price: "320", image: "https://via.placeholder.com/300x250?text=Silicone", description: "Влагостойкий", specs: "300 мл, 18 ч" },
+            { id: 6, name: "Полиуретановый клей", category: "wood", price: "550", image: "https://via.placeholder.com/300x250?text=Polyurethane", description: "Профессиональный", specs: "500 мл, 8 ч" }
+        ];
+
+        let currentFilter = 'all';
+        let cartCount = 0;
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+
+            const filtered = current
